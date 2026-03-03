@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
@@ -80,6 +81,21 @@ export default function LoginPage() {
         >
           {isSubmitting ? "Logging in..." : "Login"}
         </button>
+
+        <div className="flex justify-between pt-1 text-sm">
+          <Link
+            href="/home"
+            className="text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100"
+          >
+            ← Home
+          </Link>
+          <Link
+            href="/signup"
+            className="text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100"
+          >
+            Create an account
+          </Link>
+        </div>
       </form>
     </main>
   );

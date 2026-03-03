@@ -234,6 +234,17 @@ Write comprehensive documentation covering every aspect of the project.
 
 ---
 
+## Phase 12 — Bug Fixes
+
+Fixes identified during manual testing.
+
+- [x] **Login page navigation** — added "← Home" and "Create an account" links inside the login form card so users can navigate without using the browser back button
+- [x] **Sign-up page navigation** — added "← Home" and "Already have an account?" links inside the sign-up form card
+- [x] **Avatar not rendering after upload (local)** — `next/image` proxies the image through Next.js's optimization server, which can fail silently when fetching from the local Supabase storage URL. Replaced `<Image>` with a plain `<img>` tag so the browser fetches the image directly
+- [x] **Avatars bucket missing on hosted database** — the bucket and its storage RLS policies were only in `seed.sql`, which `supabase db push` never runs. Moved them into `supabase/migrations/20240102000000_create_avatars_bucket.sql` so they are applied to the remote via the GitHub Actions workflow. Cleared the duplicate content from `seed.sql`
+
+---
+
 ## Phase 11 — Final Verification & Submission
 
 - [ ] Run the full setup process from scratch: delete `node_modules` and `.env.local` (do **not** delete `supabase/`), then run `bash setup.sh`

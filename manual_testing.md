@@ -141,17 +141,17 @@ Uses the local Supabase instance running in Docker (`http://127.0.0.1:54321`).
 
 ## Part 2 — GitHub Actions Verification
 
-- [ ] Open your repository on GitHub: `https://github.com/braysch/cs4610-assignment2`
-- [ ] Click the **Actions** tab
-- [ ] Confirm the **"Apply Database Migrations"** workflow appears
-- [ ] Click the most recent run and verify all steps completed with green checkmarks:
+- [x] Open your repository on GitHub: `https://github.com/braysch/cs4610-assignment2`
+- [x] Click the **Actions** tab
+- [x] Confirm the **"Apply Database Migrations"** workflow appears
+- [x] Click the most recent run and verify all steps completed with green checkmarks:
   - Checkout repository ✓
   - Set up Node.js ✓
   - Install dependencies ✓
   - Set up Supabase CLI ✓
   - Link Supabase project ✓
   - Push migrations to remote ✓
-- [ ] No steps show a red ✗
+- [x] No steps show a red ✗
 
 > If the workflow failed, check the step that failed for error details. Common causes:
 > - `SUPABASE_ACCESS_TOKEN` secret is invalid or expired — regenerate at supabase.com/dashboard/account/tokens
@@ -175,17 +175,17 @@ This section tests the app against your **remote** Supabase project instead of t
 
   Both values are available in the Supabase dashboard under **Project Settings → API**.
 
-- [ ] Stop and restart the dev server (`Ctrl+C`, then `npm run dev`) so the new env vars are picked up
-- [ ] Confirm the app loads at `http://localhost:3000`
+- [x] Stop and restart the dev server (`Ctrl+C`, then `npm run dev`) so the new env vars are picked up
+- [x] Confirm the app loads at `http://localhost:3000`
 
 ---
 
 ### 3B. Verify Migrations Were Applied
 
-- [ ] Open the Supabase dashboard for your hosted project
-- [ ] Navigate to **Table Editor** — confirm a `profiles` table exists with columns: `id`, `email`, `full_name`, `avatar_url`, `updated_at`
-- [ ] Navigate to **Authentication → Policies** — confirm RLS is enabled on `profiles` with two policies (SELECT and UPDATE)
-- [ ] Navigate to **Storage** — confirm an `avatars` bucket exists and is marked **Public**
+- [x] Open the Supabase dashboard for your hosted project
+- [x] Navigate to **Table Editor** — confirm a `profiles` table exists with columns: `id`, `email`, `full_name`, `avatar_url`, `updated_at`
+- [x] Navigate to **Authentication → Policies** — confirm RLS is enabled on `profiles` with two policies (SELECT and UPDATE)
+- [x] Navigate to **Storage** — confirm an `avatars` bucket exists and is marked **Public**
 
 > If the table or bucket is missing, the GitHub Actions migration run did not complete successfully. Fix the Actions failure (Part 2) and re-run the workflow, or run `npx supabase db push` manually after linking your project.
 
@@ -195,15 +195,15 @@ This section tests the app against your **remote** Supabase project instead of t
 
 Repeat the core flow from Part 1 against the hosted database:
 
-- [ ] Sign up with a **new** email (different from what you used locally)
-- [ ] Confirm redirect to `/dashboard` and your email is shown
-- [ ] In the **hosted** Supabase Studio (dashboard.supabase.com → your project → Table Editor → profiles), confirm the profile row was auto-created by the trigger
-- [ ] Go to `/profile`, set a Full Name, click **Save** — confirm success message
-- [ ] Upload an avatar — confirm preview updates
-- [ ] In the hosted Supabase dashboard → **Storage → avatars**, confirm the file is present
-- [ ] Sign out — confirm redirect to `/home`
-- [ ] Sign in with the same credentials — confirm redirect to `/dashboard`
-- [ ] Sign out
+- [x] Sign up with a **new** email (different from what you used locally)
+- [x] Confirm redirect to `/dashboard` and your email is shown
+- [x] In the **hosted** Supabase Studio (dashboard.supabase.com → your project → Table Editor → profiles), confirm the profile row was auto-created by the trigger
+- [x] Go to `/profile`, set a Full Name, click **Save** — confirm success message
+- [FAILURE] Upload an avatar — confirm preview updates
+- [FAILURE] In the hosted Supabase dashboard → **Storage → avatars**, confirm the file is present
+- [x] Sign out — confirm redirect to `/home`
+- [x] Sign in with the same credentials — confirm redirect to `/dashboard`
+- [x] Sign out
 
 ---
 
@@ -211,7 +211,7 @@ Repeat the core flow from Part 1 against the hosted database:
 
 When done testing the hosted database, restore your local dev environment:
 
-- [ ] Update `.env.local` back to the local values:
+- [x] Update `.env.local` back to the local values:
 
   ```
   NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
@@ -220,11 +220,66 @@ When done testing the hosted database, restore your local dev environment:
 
   Run `npx supabase status -o env` if you need the local key again.
 
-- [ ] Restart the dev server
+- [x] Restart the dev server
 
 ---
 
-## Part 4 — Pre-Submission Checklist
+## Part 4 — Bug Fix Verification
+
+Targeted tests for the four issues fixed in Phase 12. Run these after the fixes have been pushed and the GitHub Actions workflow has re-applied migrations to the remote.
+
+---
+
+### 4A. Login Page Navigation Links
+
+- [ ] Visit `http://localhost:3000/login`
+- [ ] Confirm a **"← Home"** link appears at the bottom-left of the form card
+- [ ] Confirm a **"Create an account"** link appears at the bottom-right of the form card
+- [ ] Click **"← Home"** — confirm you are taken to `/home`
+- [ ] Go back to `/login`, click **"Create an account"** — confirm you are taken to `/signup`
+
+---
+
+### 4B. Sign-Up Page Navigation Links
+
+- [ ] Visit `http://localhost:3000/signup`
+- [ ] Confirm a **"← Home"** link appears at the bottom-left of the form card
+- [ ] Confirm an **"Already have an account?"** link appears at the bottom-right of the form card
+- [ ] Click **"← Home"** — confirm you are taken to `/home`
+- [ ] Go back to `/signup`, click **"Already have an account?"** — confirm you are taken to `/login`
+
+---
+
+### 4C. Avatar Renders Immediately After Upload (Local)
+
+**Prerequisite:** local Supabase running, app pointed at `http://127.0.0.1:54321`.
+
+- [ ] Sign in and navigate to `/profile`
+- [ ] Click **"Choose Image"** and select an image file
+- [ ] Confirm the button briefly shows **"Uploading…"**
+- [ ] Confirm the avatar preview **updates immediately** after upload — the image should appear in the circular frame without a page reload
+- [ ] Reload the page — confirm the avatar is still shown (URL was persisted to the `profiles` table)
+- [ ] Upload a second, different image — confirm the preview updates again (upsert replaces, no duplicates in Storage)
+
+---
+
+### 4D. Avatars Bucket Created on Remote (Hosted Database)
+
+**Prerequisite:** the new migration (`20240102000000_create_avatars_bucket.sql`) must have been pushed to the remote via GitHub Actions. Verify the workflow ran successfully after the fix was pushed.
+
+- [ ] Open the hosted Supabase dashboard → **Storage**
+- [ ] Confirm an **`avatars`** bucket now appears and is marked **Public**
+- [ ] Click into the bucket — it should be empty (or contain avatars from earlier test runs)
+- [ ] Switch `.env.local` to the hosted database values and restart the dev server
+- [ ] Sign in with an existing hosted-database account and navigate to `/profile`
+- [ ] Upload an avatar image — confirm the preview updates immediately (the `<img>` fix applies here too)
+- [ ] In the hosted Supabase dashboard → **Storage → avatars** — confirm the file was created at `{userId}/avatar`
+- [ ] Navigate to **Table Editor → profiles** — confirm `avatar_url` was updated
+- [ ] Restore `.env.local` to local values and restart the dev server
+
+---
+
+## Part 5 — Pre-Submission Checklist
 
 - [ ] All checkboxes in Parts 1–3 are checked
 - [ ] `npm test` passes (7/7)

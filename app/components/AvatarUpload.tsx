@@ -1,7 +1,6 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 
 interface AvatarUploadProps {
@@ -69,12 +68,13 @@ export default function AvatarUpload({ userId, avatarUrl: initialAvatarUrl }: Av
       <h2 className="self-start text-lg font-semibold text-zinc-900 dark:text-zinc-100">Avatar</h2>
 
       {avatarUrl ? (
-        <Image
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
           src={avatarUrl}
           alt="User avatar"
           width={96}
           height={96}
-          className="rounded-full object-cover ring-2 ring-zinc-200 dark:ring-zinc-700"
+          className="h-24 w-24 rounded-full object-cover ring-2 ring-zinc-200 dark:ring-zinc-700"
         />
       ) : (
         <div className="flex h-24 w-24 items-center justify-center rounded-full bg-zinc-100 text-4xl text-zinc-400 dark:bg-zinc-800">
