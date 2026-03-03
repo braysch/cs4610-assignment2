@@ -27,46 +27,21 @@ jobs:
       # supabase is already a devDependency — npm ci (above) makes it available
       # via npx, so no separate CLI install step is needed.
 
-      # Link this checkout to the remote Supabase project. After this step,
-      # subsequent supabase commands know which project to target.
+      # Link this checkout to the remote Supabase project and store the database
+      # password in the project config. Passing --password here means db push
+      # below can use the stored credentials without any manual URL construction.
+      # The CLI resolves the correct pooler endpoint and username format for the
+      # project automatically — no hardcoded hostnames needed.
       - name: Link Supabase project
-        run: npx supabase link --project-ref "$SUPABASE_PROJECT_ID"
+        run: npx supabase link --project-ref "$SUPABASE_PROJECT_ID" --password "$SUPABASE_DB_PASSWORD"
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
 
       # Push every migration file under supabase/migrations/ that hasn't been
       # applied to the remote database yet.
-      #
-      # Two problems solved here:
-      #
-      # 1. IPv6: GitHub Actions runners have no IPv6 route. The direct DB host
-      #    (db.<ref>.supabase.co) has both A and AAAA records and Go's postgres
-      #    driver prefers AAAA, which immediately fails. We resolve the IPv4
-      #    address with Python and pin it in /etc/hosts so the driver only sees
-      #    the A record.
-      #
-      # 2. Special characters in password: embedding the password directly in a
-      #    shell-expanded URL string breaks if it contains @, $, #, etc. Python's
-      #    urllib.parse.quote percent-encodes it safely before it touches the URL.
       - name: Push migrations to remote
-        run: |
-          DB_HOST="db.${SUPABASE_PROJECT_ID}.supabase.co"
-
-          # Resolve to IPv4 and pin in /etc/hosts.
-          IPV4=$(python3 -c "import socket; print(socket.getaddrinfo('${DB_HOST}', 5432, socket.AF_INET)[0][4][0])")
-          echo "${IPV4} ${DB_HOST}" | sudo tee -a /etc/hosts
-
-          # Build the connection URL with a percent-encoded password.
-          DB_URL=$(python3 -c "
-          import os, urllib.parse
-          pw  = urllib.parse.quote(os.environ['SUPABASE_DB_PASSWORD'], safe='')
-          ref = os.environ['SUPABASE_PROJECT_ID']
-          print(f'postgresql://postgres:{pw}@db.{ref}.supabase.co:5432/postgres')
-          ")
-
-          npx supabase db push --db-url "$DB_URL"
+        run: npx supabase db push
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
-          SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
