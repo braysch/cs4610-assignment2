@@ -29,7 +29,7 @@ export default function AvatarUpload({ userId, avatarUrl: initialAvatarUrl }: Av
 
     const { error: uploadError } = await supabase.storage
       .from("avatars")
-      .upload(filePath, file, { upsert: true });
+      .upload(filePath, file, { upsert: true, cacheControl: "0" });
 
     if (uploadError) {
       setError(uploadError.message);

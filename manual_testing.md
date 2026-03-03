@@ -83,7 +83,7 @@ Uses the local Supabase instance running in Docker (`http://127.0.0.1:54321`).
 
 - [x] On `/profile`, find the **Avatar** section
 - [x] Click **"Choose Image"** and select any image file (PNG, JPEG, GIF, or WebP)
-- [FAILURE] Expected: button briefly shows "Uploading…", then the avatar preview updates with your image
+- [x] Expected: button briefly shows "Uploading…", then the avatar preview updates with your image
 - [x] No error message is shown
 
 **Verify in Supabase Studio:**
@@ -259,7 +259,7 @@ Targeted tests for the four issues fixed in Phase 12. Run these after the fixes 
 - [x] Confirm the button briefly shows **"Uploading…"**
 - [x] Confirm the avatar preview **updates immediately** after upload — the image should appear in the circular frame without a page reload
 - [x] Reload the page — confirm the avatar is still shown (URL was persisted to the `profiles` table)
-- [FAILURE] Upload a second, different image — confirm the preview updates again (upsert replaces, no duplicates in Storage)
+- [x] Upload a second, different image — confirm the preview updates again (upsert replaces, no duplicates in Storage)
 
 ---
 
@@ -267,8 +267,8 @@ Targeted tests for the four issues fixed in Phase 12. Run these after the fixes 
 
 **Prerequisite:** the new migration (`20240102000000_create_avatars_bucket.sql`) must have been pushed to the remote via GitHub Actions. Verify the workflow ran successfully after the fix was pushed.
 
-- [ ] Open the hosted Supabase dashboard → **Storage**
-- [ ] Confirm an **`avatars`** bucket now appears and is marked **Public**
+- [x] Open the hosted Supabase dashboard → **Storage**
+- [FAILURE] Confirm an **`avatars`** bucket now appears and is marked **Public**
 - [ ] Click into the bucket — it should be empty (or contain avatars from earlier test runs)
 - [ ] Switch `.env.local` to the hosted database values and restart the dev server
 - [ ] Sign in with an existing hosted-database account and navigate to `/profile`
