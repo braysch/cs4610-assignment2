@@ -232,21 +232,21 @@ Targeted tests for the four issues fixed in Phase 12. Run these after the fixes 
 
 ### 4A. Login Page Navigation Links
 
-- [ ] Visit `http://localhost:3000/login`
-- [ ] Confirm a **"← Home"** link appears at the bottom-left of the form card
-- [ ] Confirm a **"Create an account"** link appears at the bottom-right of the form card
-- [ ] Click **"← Home"** — confirm you are taken to `/home`
-- [ ] Go back to `/login`, click **"Create an account"** — confirm you are taken to `/signup`
+- [x] Visit `http://localhost:3000/login`
+- [x] Confirm a **"← Home"** link appears at the bottom-left of the form card
+- [x] Confirm a **"Create an account"** link appears at the bottom-right of the form card
+- [x] Click **"← Home"** — confirm you are taken to `/home`
+- [x] Go back to `/login`, click **"Create an account"** — confirm you are taken to `/signup`
 
 ---
 
 ### 4B. Sign-Up Page Navigation Links
 
-- [ ] Visit `http://localhost:3000/signup`
-- [ ] Confirm a **"← Home"** link appears at the bottom-left of the form card
-- [ ] Confirm an **"Already have an account?"** link appears at the bottom-right of the form card
-- [ ] Click **"← Home"** — confirm you are taken to `/home`
-- [ ] Go back to `/signup`, click **"Already have an account?"** — confirm you are taken to `/login`
+- [x] Visit `http://localhost:3000/signup`
+- [x] Confirm a **"← Home"** link appears at the bottom-left of the form card
+- [x] Confirm an **"Already have an account?"** link appears at the bottom-right of the form card
+- [x] Click **"← Home"** — confirm you are taken to `/home`
+- [x] Go back to `/signup`, click **"Already have an account?"** — confirm you are taken to `/login`
 
 ---
 
@@ -254,12 +254,12 @@ Targeted tests for the four issues fixed in Phase 12. Run these after the fixes 
 
 **Prerequisite:** local Supabase running, app pointed at `http://127.0.0.1:54321`.
 
-- [ ] Sign in and navigate to `/profile`
-- [ ] Click **"Choose Image"** and select an image file
-- [ ] Confirm the button briefly shows **"Uploading…"**
-- [ ] Confirm the avatar preview **updates immediately** after upload — the image should appear in the circular frame without a page reload
-- [ ] Reload the page — confirm the avatar is still shown (URL was persisted to the `profiles` table)
-- [ ] Upload a second, different image — confirm the preview updates again (upsert replaces, no duplicates in Storage)
+- [x] Sign in and navigate to `/profile`
+- [x] Click **"Choose Image"** and select an image file
+- [x] Confirm the button briefly shows **"Uploading…"**
+- [x] Confirm the avatar preview **updates immediately** after upload — the image should appear in the circular frame without a page reload
+- [x] Reload the page — confirm the avatar is still shown (URL was persisted to the `profiles` table)
+- [FAILURE] Upload a second, different image — confirm the preview updates again (upsert replaces, no duplicates in Storage)
 
 ---
 

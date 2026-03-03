@@ -47,10 +47,18 @@ jobs:
       # of --password alone. The default CLI behaviour routes through Supabase's
       # connection pooler (pooler.supabase.com) which uses transaction mode and
       # rejects SCRAM-SHA-256 auth. The direct host bypasses the pooler entirely.
+      #
+      # The password is URL-encoded via Python before being embedded in the
+      # connection string, so special characters (@ # $ etc.) don't break parsing.
       - name: Push migrations to remote
         run: |
-          supabase db push \
-            --db-url "postgresql://postgres:${SUPABASE_DB_PASSWORD}@db.${SUPABASE_PROJECT_ID}.supabase.co:5432/postgres"
+          DB_URL=$(python3 -c "
+          import os, urllib.parse
+          pw  = urllib.parse.quote(os.environ['SUPABASE_DB_PASSWORD'], safe='')
+          ref = os.environ['SUPABASE_PROJECT_ID']
+          print(f'postgresql://postgres:{pw}@db.{ref}.supabase.co:5432/postgres')
+          ")
+          supabase db push --db-url "$DB_URL"
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
