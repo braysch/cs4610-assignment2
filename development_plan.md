@@ -199,12 +199,12 @@ Set up an automated workflow that applies database migrations on push.
   - Install dependencies (`npm ci`)
   - Install the Supabase CLI (via `supabase/setup-cli@v1` action)
   - Run `supabase db push` against the remote Supabase project using secrets
-- [ ] Add the following secrets to the GitHub repository: *(manual — requires a remote Supabase project)*
+- [x] Add the following secrets to the GitHub repository:
   - `SUPABASE_ACCESS_TOKEN` — personal access token from Supabase
   - `SUPABASE_PROJECT_ID` — the project reference ID
   - `SUPABASE_DB_PASSWORD` — the database password
-- [ ] Test the workflow by pushing a commit and verifying the Actions run succeeds
-- [ ] Document the workflow and required secrets in the README *(covered in Phase 10)*
+- [x] Test the workflow by pushing a commit and verifying the Actions run succeeds
+- [x] Document the workflow and required secrets in the README *(covered in Phase 10)*
 
 ---
 
@@ -212,25 +212,25 @@ Set up an automated workflow that applies database migrations on push.
 
 Write comprehensive documentation covering every aspect of the project.
 
-- [ ] **Project description** — what this starter app is and what it demonstrates
-- [ ] **Prerequisites** — Node.js version, Docker (for local Supabase), Git
-- [ ] **Quick start** — single command (`bash setup.sh`) with brief explanation of what it does
-- [ ] **Manual setup instructions** — step-by-step alternative to the script for users who prefer it
-- [ ] **Running the app** — `npm run dev`, local URLs (app + Supabase Studio)
-- [ ] **Project structure** — annotated directory tree covering `app/`, `lib/`, `supabase/`, `middleware.ts`, `setup.sh`
-- [ ] **Environment variables** — table of all variables, what they are, where they come from
-- [ ] **Database schema** — table for `profiles` (columns, types, notes); explain the two triggers
-- [ ] **Authentication flow** — narrative walkthrough of sign-up → trigger → profile creation → session → sign-out
-- [ ] **Authentication patterns** — document the two canonical approaches:
+- [x] **Project description** — what this starter app is and what it demonstrates
+- [x] **Prerequisites** — Node.js version, Docker (for local Supabase), Git
+- [x] **Quick start** — single command (`bash setup.sh`) with brief explanation of what it does
+- [x] **Manual setup instructions** — step-by-step alternative to the script for users who prefer it
+- [x] **Running the app** — `npm run dev`, local URLs (app + Supabase Studio)
+- [x] **Project structure** — annotated directory tree covering `app/`, `lib/`, `supabase/`, `middleware.ts`, `setup.sh`
+- [x] **Environment variables** — table of all variables, what they are, where they come from
+- [x] **Database schema** — table for `profiles` (columns, types, notes); explain the two triggers
+- [x] **Authentication flow** — narrative walkthrough of sign-up → trigger → profile creation → session → sign-out
+- [x] **Authentication patterns** — document the two canonical approaches:
   - Server Components / Route Handlers: use `getUser()` from `lib/auth.ts` (or equivalent)
   - Client Components: use the `useAuth()` hook from `app/hooks/useAuth.ts`
-- [ ] **Code organization decisions** — document where components, hooks, and utilities live and why
-- [ ] **How to use this as a starter app** — steps for cloning and adapting it for a new project
-- [ ] **Running and writing tests** — `npm test`, where tests live, how to add new ones
-- [ ] **Deployment instructions** — how to deploy to Vercel (or similar); required environment variables for production; linking to a hosted Supabase project
-- [ ] **GitHub Actions setup** — which secrets to add, where to find the values, how to enable the migration workflow
-- [ ] **Troubleshooting** — common issues (Docker not running, port conflicts, credential extraction failures, RLS blocking queries) and their fixes
-- [ ] Proofread the README end-to-end from the perspective of a new developer cloning the repo for the first time
+- [x] **Code organization decisions** — document where components, hooks, and utilities live and why
+- [x] **How to use this as a starter app** — steps for cloning and adapting it for a new project
+- [x] **Running and writing tests** — `npm test`, where tests live, how to add new ones
+- [x] **Deployment instructions** — how to deploy to Vercel (or similar); required environment variables for production; linking to a hosted Supabase project
+- [x] **GitHub Actions setup** — which secrets to add, where to find the values, how to enable the migration workflow
+- [x] **Troubleshooting** — common issues (Docker not running, port conflicts, credential extraction failures, RLS blocking queries) and their fixes
+- [x] Proofread the README end-to-end from the perspective of a new developer cloning the repo for the first time
 
 ---
 
@@ -240,7 +240,9 @@ Write comprehensive documentation covering every aspect of the project.
 - [ ] Verify the app starts with `npm run dev` and all pages load correctly
 - [ ] Manually test the full user journey: sign up → dashboard → profile update → avatar upload → sign out → sign in → sign out
 - [ ] Verify a new user's profile row is created automatically in the `profiles` table
-- [ ] Run `npm test` and confirm all tests pass
+- [x] Run `npm test` and confirm all tests pass *(7/7 passing)*
+- [x] Verify TypeScript — `npx tsc --noEmit` exits clean
+- [x] Verify production build — `npm run build` compiles successfully (all 9 routes generated)
 - [ ] Verify the GitHub Actions migration workflow runs successfully
 - [ ] Remove the `node_modules` folder before submitting
 - [ ] Submit the project
