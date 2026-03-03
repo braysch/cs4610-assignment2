@@ -199,8 +199,8 @@ Repeat the core flow from Part 1 against the hosted database:
 - [x] Confirm redirect to `/dashboard` and your email is shown
 - [x] In the **hosted** Supabase Studio (dashboard.supabase.com → your project → Table Editor → profiles), confirm the profile row was auto-created by the trigger
 - [x] Go to `/profile`, set a Full Name, click **Save** — confirm success message
-- [FAILURE] Upload an avatar — confirm preview updates
-- [FAILURE] In the hosted Supabase dashboard → **Storage → avatars**, confirm the file is present
+- [x] Upload an avatar — confirm preview updates
+- [x] In the hosted Supabase dashboard → **Storage → avatars**, confirm the file is present
 - [x] Sign out — confirm redirect to `/home`
 - [x] Sign in with the same credentials — confirm redirect to `/dashboard`
 - [x] Sign out
@@ -268,23 +268,23 @@ Targeted tests for the four issues fixed in Phase 12. Run these after the fixes 
 **Prerequisite:** the new migration (`20240102000000_create_avatars_bucket.sql`) must have been pushed to the remote via GitHub Actions. Verify the workflow ran successfully after the fix was pushed.
 
 - [x] Open the hosted Supabase dashboard → **Storage**
-- [FAILURE] Confirm an **`avatars`** bucket now appears and is marked **Public**
-- [ ] Click into the bucket — it should be empty (or contain avatars from earlier test runs)
-- [ ] Switch `.env.local` to the hosted database values and restart the dev server
-- [ ] Sign in with an existing hosted-database account and navigate to `/profile`
-- [ ] Upload an avatar image — confirm the preview updates immediately (the `<img>` fix applies here too)
-- [ ] In the hosted Supabase dashboard → **Storage → avatars** — confirm the file was created at `{userId}/avatar`
-- [ ] Navigate to **Table Editor → profiles** — confirm `avatar_url` was updated
-- [ ] Restore `.env.local` to local values and restart the dev server
+- [x] Confirm an **`avatars`** bucket now appears and is marked **Public**
+- [x] Click into the bucket — it should be empty (or contain avatars from earlier test runs)
+- [x] Switch `.env.local` to the hosted database values and restart the dev server
+- [x] Sign in with an existing hosted-database account and navigate to `/profile`
+- [x] Upload an avatar image — confirm the preview updates immediately (the `<img>` fix applies here too)
+- [x] In the hosted Supabase dashboard → **Storage → avatars** — confirm the file was created at `{userId}/avatar`
+- [x] Navigate to **Table Editor → profiles** — confirm `avatar_url` was updated
+- [x] Restore `.env.local` to local values and restart the dev server
 
 ---
 
 ## Part 5 — Pre-Submission Checklist
 
-- [ ] All checkboxes in Parts 1–3 are checked
-- [ ] `npm test` passes (7/7)
-- [ ] `npm run build` completes without errors
-- [ ] `.env.local` is **not** tracked by git (`git status` should not show it)
-- [ ] `node_modules/` is **not** tracked by git
+- [x] All checkboxes in Parts 1–3 are checked
+- [x] `npm test` passes (7/7)
+- [x] `npm run build` completes without errors
+- [x] `.env.local` is **not** tracked by git (`git status` should not show it)
+- [x] `node_modules/` is **not** tracked by git
 - [ ] Remove `node_modules` before submitting: `rm -rf node_modules`
 - [ ] Submit the project per your course instructions
